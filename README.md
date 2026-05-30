@@ -54,6 +54,10 @@ BOOK_EXCHANGE_API_REQUIRE_AVAILABLE=true
 
 By default, tests are skipped when the API is unreachable. Set `BOOK_EXCHANGE_API_REQUIRE_AVAILABLE=true` when you want the build to fail if the target API is down.
 
+## CI Behavior
+
+GitHub Actions checks out this test repository and the real backend repository, [book-exchange-api](https://github.com/vladwpnz/book-exchange-api), side by side. The workflow starts a MySQL service, creates the `friendssharing` database if needed, starts the backend from the backend repository, waits for `http://localhost:8080`, and then runs these Maven API tests with `BOOK_EXCHANGE_API_REQUIRE_AVAILABLE=true`.
+
 ## Run Locally
 ### Windows with XAMPP
 
@@ -108,6 +112,20 @@ On Windows PowerShell:
 ```powershell
 $env:BOOK_EXCHANGE_API_BASE_URL = "http://localhost:8080"
 mvn test
+```
+
+## Latest Local Validation
+
+```text
+AdminApiTest: 8 tests
+AuthApiTest: 7 tests
+BookApiTest: 6 tests
+BookTransferApiTest: 6 tests
+Total: 27 tests
+Failures: 0
+Errors: 0
+Skipped: 0
+BUILD SUCCESS
 ```
 
 ## Project Structure
