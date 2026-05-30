@@ -4,7 +4,11 @@ on:
   push:
     branches:
       - main
-      - "codex/**"
+      - "feature/**"
+      - "fix/**"
+      - "chore/**"
+      - "test/**"
+      - "docs/**"
   pull_request:
   workflow_dispatch:
 
