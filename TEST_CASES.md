@@ -46,6 +46,8 @@
 | ADMIN-006 | Admin deletes an unknown book ID | `400 Bad Request`, `Wrong id` |
 | ADMIN-007 | Admin force-returns a shared book | `200 OK`, book is returned to owner |
 | ADMIN-008 | Admin force-returns an unknown book ID | `400 Bad Request`, `Wrong id` |
+| ADMIN-009 | Regular user force-returns a book | `403 Forbidden` |
+| ADMIN-010 | Anonymous user force-returns a book | `401 Unauthorized` |
 
 ## Manual Postman Coverage
 
