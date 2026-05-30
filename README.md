@@ -1,5 +1,7 @@
 # Book Exchange API Tests
 
+[![API Tests](https://github.com/vladwpnz/book-exchange-api-tests/actions/workflows/api-tests.yml/badge.svg)](https://github.com/vladwpnz/book-exchange-api-tests/actions/workflows/api-tests.yml)
+
 Automated black-box API tests for [book-exchange-api](https://github.com/vladwpnz/book-exchange-api).
 
 This repository is intentionally separate from the main Spring Boot API repository. It contains only the Maven test project, API testing documentation, a Postman collection, and GitHub Actions workflow files.
@@ -53,6 +55,34 @@ BOOK_EXCHANGE_API_REQUIRE_AVAILABLE=true
 By default, tests are skipped when the API is unreachable. Set `BOOK_EXCHANGE_API_REQUIRE_AVAILABLE=true` when you want the build to fail if the target API is down.
 
 ## Run Locally
+### Windows with XAMPP
+
+If you use XAMPP instead of Docker:
+
+1. Open XAMPP Control Panel.
+2. Start MySQL.
+3. Make sure MySQL is running on port `3306`.
+4. Make sure the `friendssharing` database exists.
+
+Create the database if needed:
+
+```powershell
+& "C:\xampp\mysql\bin\mysql.exe" -h 127.0.0.1 -P 3306 -u root -e "CREATE DATABASE IF NOT EXISTS friendssharing;"
+```
+
+Start the main API:
+
+```powershell
+cd C:\Projects\book-exchange-api
+mvn spring-boot:run
+```
+
+Then run the API tests:
+
+```powershell
+cd C:\Projects\book-exchange-api-tests
+mvn test
+```
 
 Start the main API first:
 
