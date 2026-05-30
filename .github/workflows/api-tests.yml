@@ -1,0 +1,37 @@
+name: API Tests
+
+on:
+  push:
+    branches:
+      - main
+      - "codex-*"
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      api_base_url:
+        description: "Book Exchange API base URL"
+        required: false
+        default: "http://localhost:8080"
+
+jobs:
+  api-tests:
+    name: Run API tests
+    runs-on: ubuntu-latest
+
+    env:
+      BOOK_EXCHANGE_API_BASE_URL: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.api_base_url || 'http://localhost:8080' }}
+      BOOK_EXCHANGE_API_REQUIRE_AVAILABLE: ${{ github.event_name == 'workflow_dispatch' && 'true' || 'false' }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+          cache: maven
+
+      - name: Run Maven tests
+        run: mvn -B test
