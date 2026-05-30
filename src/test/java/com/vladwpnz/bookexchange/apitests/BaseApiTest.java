@@ -30,7 +30,7 @@ public abstract class BaseApiTest {
             RestAssured.given()
                     .relaxedHTTPSValidation()
                     .get("/");
-        } catch (RuntimeException exception) {
+        } catch (Exception exception) {
             String message = "Book Exchange API is not reachable at " + apiConfig.baseUrl()
                     + ". Start the API or set " + ApiConfig.BASE_URL_ENV + ".";
 
