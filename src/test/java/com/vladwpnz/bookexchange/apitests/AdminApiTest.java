@@ -139,4 +139,26 @@ class AdminApiTest extends BaseApiTest {
 
         assertThat(body).contains("Wrong id");
     }
+
+    @Test
+    @DisplayName("POST /book/return/force is forbidden for regular user")
+    void regularUserCannotForceReturnBook() {
+        TestUser user = AuthHelper.registerUser();
+
+        ApiRequests.authenticated(user)
+                .queryParam("id", TestDataFactory.unlikelyBookId())
+                .post(EndpointPaths.FORCE_RETURN_BOOK)
+                .then()
+                .statusCode(403);
+    }
+
+    @Test
+    @DisplayName("POST /book/return/force requires authentication")
+    void anonymousUserCannotForceReturnBook() {
+        ApiRequests.json()
+                .queryParam("id", TestDataFactory.unlikelyBookId())
+                .post(EndpointPaths.FORCE_RETURN_BOOK)
+                .then()
+                .statusCode(401);
+    }
 }
