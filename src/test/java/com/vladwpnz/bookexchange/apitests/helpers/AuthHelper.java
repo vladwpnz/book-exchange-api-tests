@@ -20,7 +20,7 @@ public final class AuthHelper {
     public static TestUser register(TestUser user) {
         String body = registerResponse(user)
                 .then()
-                .statusCode(200)
+                .statusCode(201)
                 .extract()
                 .asString();
 

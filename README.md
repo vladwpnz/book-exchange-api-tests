@@ -116,16 +116,22 @@ mvn test
 
 ## Latest Local Validation
 
+Latest run in this workspace compiled the test suite successfully, but did not execute the API scenarios because `http://localhost:8080` was unreachable and API availability is optional by default.
+
 ```text
-AdminApiTest: 8 tests
+AdminApiTest: 10 tests
 AuthApiTest: 7 tests
-BookApiTest: 6 tests
+BookApiTest: 7 tests
 BookTransferApiTest: 6 tests
-Total: 27 tests
+Total: 30 tests
+
+mvn test:
+Tests run: 0
 Failures: 0
 Errors: 0
 Skipped: 0
 BUILD SUCCESS
+API execution: skipped by availability check because the backend was unreachable
 ```
 
 ## Project Structure
@@ -154,5 +160,5 @@ Some endpoint names and JSON field names may need small updates after running ag
 
 - Basic Auth standing in for "login"
 - `book_id`, `holder_id`, and `owner_id` response fields
-- `POST /book/return/force` security behavior
-- Current "not found" cases returning `400 Bad Request` with text such as `Wrong id`
+- `POST /book/return/force` admin-only security behavior
+- Admin book not-found cases returning `404 Not Found` with `Book not found`

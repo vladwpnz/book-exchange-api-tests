@@ -16,8 +16,7 @@ public final class EndpointPaths {
     public static final String ADMIN_ITEMS = "/items";
     public static final String DELETE_BOOK = "/book/delete";
 
-    // Controller currently exposes POST /book/return/force.
-    // Security config should also protect this POST path with ADMIN authority.
+    // Admin tests verify this POST path rejects non-admin users.
     public static final String FORCE_RETURN_BOOK = "/book/return/force";
 
     private EndpointPaths() {

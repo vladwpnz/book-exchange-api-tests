@@ -19,7 +19,7 @@ Covered:
 - Giving books permanently
 - Returning borrowed books
 - Admin listing, deletion, and force-return actions
-- Current not-found behavior for invalid IDs and missing users/books
+- Current not-found behavior for invalid book IDs and missing users/books
 
 Not covered:
 
@@ -74,9 +74,9 @@ The tests generate unique users and book titles so they can run repeatedly again
 ## Risks And Assumptions
 
 - The API currently has no `/login` endpoint; authentication tests use HTTP Basic credentials against `/owned`.
-- The current API returns `400 Bad Request` for several not-found cases. The tests document this current behavior instead of forcing `404 Not Found`.
+- Missing book IDs on admin delete and force-return return `404 Not Found` with `Book not found`; validation and business-rule errors remain `400 Bad Request`.
 - Admin users can currently be created through public registration by sending `"authority": "admin"`. Tests use that capability to create admin credentials, but it is listed in `BUG_REPORTS.md` as a security concern.
-- The current security configuration appears to protect `DELETE /book/return/force`, while the controller exposes `POST /book/return/force`. This is documented in `BUG_REPORTS.md`.
+- The current tests verify that `POST /book/return/force` is restricted to admin users.
 
 ## CI Strategy
 

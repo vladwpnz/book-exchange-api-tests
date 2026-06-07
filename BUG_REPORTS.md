@@ -30,28 +30,6 @@ Risk:
 
 Any unauthenticated caller may create an admin account.
 
-## BUG-002: Force Return Endpoint Security Matcher Uses The Wrong HTTP Method
-
-Severity: High
-
-Endpoint:
-
-```text
-POST /book/return/force?id={id}
-```
-
-Expected:
-
-Only `ADMIN` users should access force return.
-
-Actual:
-
-The controller exposes `POST /book/return/force`, but the inspected security configuration protects `DELETE /book/return/force`. Because `POST /book/**` is allowed for all authenticated authorities, a normal user may be able to call the force-return endpoint.
-
-Suggested fix:
-
-Protect `POST /book/return/force` with `ADMIN`, and keep the method consistent between controller, security rules, tests, and documentation.
-
 ## NOTE-001: No Dedicated Login Endpoint
 
 Severity: Informational
@@ -65,7 +43,21 @@ If a real `/login` endpoint is added later, update:
 - Postman collection
 - README and test case documentation
 
-## NOTE-002: Not-Found Cases Return 400 Instead Of 404
+## NOTE-002: Force Return Endpoint Is Restricted To Admin Users
+
+Severity: Informational
+
+Endpoint:
+
+```text
+POST /book/return/force?id={id}
+```
+
+Current tested behavior:
+
+Regular users receive `403 Forbidden`, and anonymous callers receive `401 Unauthorized`.
+
+## NOTE-003: Missing Book IDs Return 404
 
 Severity: Informational
 
@@ -73,12 +65,12 @@ Examples:
 
 - `DELETE /book/delete?id=999999999`
 - `POST /book/return/force?id=999999999`
-- Sharing a book with an unknown username
 
 Current behavior:
 
 ```text
-400 Bad Request
+404 Not Found
+Book not found
 ```
 
-This may be acceptable for the current project, but `404 Not Found` can be clearer for missing resources.
+Earlier builds returned `400 Bad Request` with `Wrong id` for these missing book cases. The backend API now returns a clearer `404 Not Found` response. Business-rule and validation errors, such as sharing a book with an unknown username, still return `400 Bad Request`.
