@@ -22,7 +22,7 @@ class AuthApiTest extends BaseApiTest {
 
         String body = AuthHelper.registerResponse(user)
                 .then()
-                .statusCode(200)
+                .statusCode(201)
                 .extract()
                 .asString();
 

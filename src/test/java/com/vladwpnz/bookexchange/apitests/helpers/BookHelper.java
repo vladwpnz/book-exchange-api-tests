@@ -14,7 +14,7 @@ public final class BookHelper {
     public static BookWithUser addBook(TestUser user, AddBookRequest book) {
         return addBookResponse(user, book)
                 .then()
-                .statusCode(200)
+                .statusCode(201)
                 .extract()
                 .as(BookWithUser.class);
     }

@@ -58,6 +58,21 @@ class BookApiTest extends BaseApiTest {
     }
 
     @Test
+    @DisplayName("POST /book/add validates required title")
+    void addBookValidationErrorWhenTitleMissing() {
+        TestUser user = AuthHelper.registerUser();
+        AddBookRequest book = new AddBookRequest(TestDataFactory.book().author(), "");
+
+        ErrorResponse error = BookHelper.addBookResponse(user, book)
+                .then()
+                .statusCode(400)
+                .extract()
+                .as(ErrorResponse.class);
+
+        assertThat(error.error()).containsIgnoringCase("title");
+    }
+
+    @Test
     @DisplayName("GET /owned returns books owned by authenticated user")
     void ownedBooksContainCreatedBook() {
         TestUser user = AuthHelper.registerUser();

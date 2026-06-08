@@ -87,20 +87,19 @@ class AdminApiTest extends BaseApiTest {
     }
 
     @Test
-    @DisplayName("DELETE /book/delete returns current not-found behavior for unknown id")
-    void adminDeleteUnknownBookIdReturnsBadRequest() {
+    @DisplayName("DELETE /book/delete returns not found for unknown id")
+    void adminDeleteUnknownBookIdReturnsNotFound() {
         TestUser admin = AuthHelper.registerAdmin();
 
-        // Current API returns 400 + "Wrong id" for missing resources. Adjust to 404 if the contract changes.
         String body = ApiRequests.authenticated(admin)
                 .queryParam("id", TestDataFactory.unlikelyBookId())
                 .delete(EndpointPaths.DELETE_BOOK)
                 .then()
-                .statusCode(400)
+                .statusCode(404)
                 .extract()
                 .asString();
 
-        assertThat(body).contains("Wrong id");
+        assertThat(body).contains("Book not found");
     }
 
     @Test
@@ -127,17 +126,17 @@ class AdminApiTest extends BaseApiTest {
     }
 
     @Test
-    @DisplayName("POST /book/return/force returns current not-found behavior for unknown id")
-    void adminForceReturnUnknownBookIdReturnsBadRequest() {
+    @DisplayName("POST /book/return/force returns not found for unknown id")
+    void adminForceReturnUnknownBookIdReturnsNotFound() {
         TestUser admin = AuthHelper.registerAdmin();
 
         String body = TransferHelper.forceReturnBookResponse(admin, TestDataFactory.unlikelyBookId())
                 .then()
-                .statusCode(400)
+                .statusCode(404)
                 .extract()
                 .asString();
 
-        assertThat(body).contains("Wrong id");
+        assertThat(body).contains("Book not found");
     }
 
     @Test
