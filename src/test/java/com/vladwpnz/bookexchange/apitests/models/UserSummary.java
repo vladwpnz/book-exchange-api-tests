@@ -1,4 +1,4 @@
 package com.vladwpnz.bookexchange.apitests.models;
 
-public record UserSummary(String name, String email) {
+public record UserSummary(String name, String email, String authority) {
 }
