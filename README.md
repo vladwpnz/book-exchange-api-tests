@@ -570,6 +570,6 @@ This repository demonstrates:
 
 ## Author
 
-### Vlad Spiridonov
+### Vladyslav Spyrydonov
 
 GitHub: [@vladwpnz](https://github.com/vladwpnz)
